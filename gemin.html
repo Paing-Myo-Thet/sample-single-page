@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year Countdown</title>
+    <style>
+        /* CSS: The Visuals */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, #1a1a2e, #16213e);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        #timer {
+            font-size: 10rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px #00d4ff;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #message {
+            font-size: 3rem;
+            margin-top: 20px;
+            text-align: center;
+            display: none; /* Hidden until 0 */
+            animation: glow 1.5s infinite alternate;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background: #e94560;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #ff2e63; }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #f0f; }
+            to { text-shadow: 0 0 20px #fff, 0 0 40px #0ff; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui-layer">
+        <button id="startBtn">Start Countdown</button>
+    </div>
+
+    <div id="timer">10</div>
+    <div id="message">✨ HAPPY NEW YEAR! ✨</div>
+
+    <audio id="finishSound">
+        <source src="https://actions.google.com/sounds/v1/foley/party_horn_long.ogg" type="audio/ogg">
+    </audio>
+
+    <script>
+        // JavaScript: The Logic
+        const timerDisplay = document.getElementById('timer');
+        const message = document.getElementById('message');
+        const startBtn = document.getElementById('startBtn');
+        const finishSound = document.getElementById('finishSound');
+        
+        let count = 10;
+
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none'; // Hide button
+            runCountdown();
+        });
+
+        function runCountdown() {
+            const countdownInterval = setInterval(() => {
+                count--;
+
+                if (count > 0) {
+                    timerDisplay.textContent = count;
+                    // Add a small "pop" effect
+                    timerDisplay.style.transform = 'scale(1.2)';
+                    setTimeout(() => timerDisplay.style.transform = 'scale(1)', 100);
+                } else {
+                    clearInterval(countdownInterval);
+                    timerDisplay.textContent = "0";
+                    triggerCelebration();
+                }
+            }, 1000);
+        }
+
+        function triggerCelebration() {
+            message.style.display = 'block';
+            timerDisplay.style.color = '#e94560';
+            finishSound.play().catch(error => {
+                console.log("Audio playback failed. Browsers require a user click first.");
+            });
+        }
+    </script>
+</body>
+</html>

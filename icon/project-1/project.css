@@ -1,0 +1,6 @@
+.navbarLink :hover{
+    border-bottom: 3px solid goldenrod;
+    transition: 0.5s;
+    color:skyblue;
+    border-radius: 5px;
+}
