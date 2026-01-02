@@ -4,3 +4,7 @@
     color:skyblue;
     border-radius: 5px;
 }
+#contact{
+    cursor: pointer;
+    user-select: none;
+}
